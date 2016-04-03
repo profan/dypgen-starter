@@ -1,8 +1,5 @@
 (* entry point for ocaml compiler, will do argument parsing and generally make the parts collaborate. *)
 
-open Grammar_parser
-open Grammar_lexer
-
 let call_with_channel (ch_open, ch_close) fn file =
     let channel = ch_open file in
     let result = fn channel in
@@ -16,8 +13,10 @@ let main ch =
     try
         let lexbuf = Lexing.from_channel ch in
         let token_stream = Grammar_parser.main Grammar_lexer.token lexbuf in
-            List.iter (fun (t, str) -> Printf.printf "%d %s" t str) token_stream
+            List.iter (fun (t, str) -> Printf.printf "result: %d %s \n" t str) token_stream
     with Grammar_lexer.Eof ->
         print_string "EOF";;
 
-call_with_input_channel (fun ch -> main ch) "tests/first.calc"
+let filename = "tests/first.calc" in
+    Printf.printf "executing: %s \n" filename;
+    call_with_input_channel (fun ch -> main ch) filename;;
