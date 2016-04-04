@@ -12,4 +12,4 @@ Structure
 
 License
 -------
-MIT
+GPLv3
